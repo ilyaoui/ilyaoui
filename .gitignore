@@ -1,0 +1,80 @@
+# NFL Flag Scraper - Git Ignore File
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# Configuration & Credentials
+config.json
+.env
+*.secret
+credentials/
+tokens/
+
+# Output Files
+*.csv
+*.json
+!config.example.json
+!requirements.txt
+nfl_flag_*.csv
+nfl_flag_*.json
+tournament_*.csv
+tournament_*.json
+bluesombrero_*.csv
+bluesombrero_*.json
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp/
+temp/
+*.tmp

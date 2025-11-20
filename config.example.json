@@ -1,0 +1,8 @@
+{
+  "client_id": "your_teamsnap_client_id",
+  "client_secret": "your_teamsnap_client_secret",
+  "access_token": "your_access_token_here",
+  "refresh_token": "your_refresh_token_here",
+  "expires_in": 7200,
+  "note": "Rename this file to config.json and fill in your actual credentials"
+}
