@@ -1,8 +1,40 @@
-# NFL Flag Tournaments Scraper 🏈
+# Sports Match Scrapers 🏆⚽🏀🏈
 
-Un scraper complet pour extraire les données des équipes et organisations de l'application **NFL Flag Tournaments** (powered by TeamSnap).
+Collection complète de scrapers pour extraire les données sportives depuis différentes sources.
 
-## 📋 Table des Matières
+## 🎯 Outils Disponibles
+
+### 1. **Generic Sports Match Scraper** (⭐ Nouveau!)
+Un scraper **universel** qui peut extraire des matchs depuis **n'importe quel site web** de sports.
+- ✅ Détection automatique de la structure des pages
+- ✅ Support multi-sports (tous les sports)
+- ✅ Découverte automatique des calendriers
+- ✅ 5 stratégies d'extraction intelligentes
+- ✅ Export CSV enrichi et organisé
+
+👉 **[Documentation complète du Generic Scraper](./GENERIC_SCRAPER_README.md)**
+
+**Démarrage rapide:**
+```bash
+# Interface interactive
+python interactive_scraper.py
+
+# Ligne de commande
+python generic_sports_scraper.py "https://example.com/matches" --single-page
+```
+
+---
+
+### 2. **NFL Flag Tournaments Scraper**
+Un scraper spécialisé pour extraire les données des équipes et organisations de l'application **NFL Flag Tournaments** (powered by TeamSnap).
+- ✅ Mode API TeamSnap (authentification OAuth2)
+- ✅ Mode Web Scraping (sans authentification)
+- ✅ Support BlueSombrero
+- ✅ Export CSV et JSON
+
+---
+
+## 📋 Table des Matières (NFL Flag Scraper)
 
 - [Fonctionnalités](#fonctionnalités)
 - [Architecture](#architecture)
@@ -51,13 +83,24 @@ TeamSnap Infrastructure
 
 ```
 ilyaoui/
-├── nfl_flag_scraper.py      # Scraper principal (API + Web)
-├── advanced_scraper.py       # Scraper avancé avec BeautifulSoup
-├── oauth_helper.py           # Utilitaire OAuth2 pour TeamSnap
-├── requirements.txt          # Dépendances Python
-├── README.md                 # Cette documentation
-├── config.json              # Configuration (généré après OAuth)
-└── .env                     # Variables d'environnement (optionnel)
+# Scraper Générique (Nouveau!)
+├── generic_sports_scraper.py    # Scraper universel pour tous les sports
+├── interactive_scraper.py       # Interface interactive conviviale
+├── GENERIC_SCRAPER_README.md    # Documentation complète du scraper générique
+
+# Scraper NFL Flag
+├── nfl_flag_scraper.py          # Scraper principal (API + Web)
+├── advanced_scraper.py          # Scraper avancé avec BeautifulSoup
+├── oauth_helper.py              # Utilitaire OAuth2 pour TeamSnap
+├── quick_start.py               # Menu de démarrage rapide
+
+# Documentation et Configuration
+├── README.md                    # Cette documentation
+├── requirements.txt             # Dépendances Python
+├── config.example.json          # Template de configuration OAuth
+├── .env.example                 # Template variables d'environnement
+├── config.json                  # Configuration (généré après OAuth)
+└── .env                         # Variables d'environnement (optionnel)
 ```
 
 ## 📦 Installation
