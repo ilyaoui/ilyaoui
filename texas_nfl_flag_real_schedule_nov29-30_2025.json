@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "search_date": "2025-11-27",
+    "target_dates": "November 29-30, 2025",
+    "location": "Texas",
+    "data_source": "Web search results from official sources",
+    "note": "Based on actual web searches of NFL Flag, USA Flag, and local league websites"
+  },
+  "summary": {
+    "official_nfl_flag_tournaments": 0,
+    "local_tournaments_found": 1,
+    "leagues_on_break": "Most youth leagues take Thanksgiving weekend off",
+    "recommendation": "Contact organizers directly for most current information"
+  },
+  "official_nfl_flag_regionals_texas": {
+    "past_events": [
+      {
+        "event_name": "Dallas Cowboys NFL FLAG Regional Tournament",
+        "date": "2025-11-09",
+        "day": "Sunday",
+        "location": "The Star",
+        "address": "Frisco, Texas",
+        "status": "COMPLETED",
+        "registration_deadline": "2025-10-13",
+        "url": "https://nflflag.com/events/cowboys",
+        "note": "This event already took place before the requested weekend"
+      }
+    ],
+    "upcoming_events": [
+      {
+        "event_name": "Houston Texans NFL FLAG Regional Tournament",
+        "date": "2025-12-06",
+        "day": "Saturday",
+        "location": "Farm League Park",
+        "address": "19735 Stuebner Airline Rd, Spring, TX 77379",
+        "status": "REGISTRATION OPEN",
+        "check_in_time": "07:30 AM",
+        "first_games": "09:00 AM",
+        "format": "5v5 Flag Football",
+        "url": "https://nflflag.com/events/texans",
+        "note": "This is the next official NFL FLAG Regional in Texas, one week after the requested weekend"
+      }
+    ]
+  },
+  "local_tournaments_nov_29_30": [
+    {
+      "event_name": "Black Friday Blitz",
+      "date": "2025-11-29",
+      "day": "Friday",
+      "location": "The Farm League",
+      "address": "19735 Stuebner Airline Rd, Spring, TX 77379",
+      "city": "Spring (Houston area)",
+      "state": "TX",
+      "organizer": "The Farm League / Lone Star Football",
+      "description": "Preparatory tournament for Houston area teams to prepare for NFL Regional style events",
+      "status": "LIKELY - Information found in searches but details not confirmed",
+      "format": "Flag Football",
+      "url": "https://www.thefarmleague.com/football/",
+      "contact_recommendation": "Visit thefarmleague.com or call directly for schedule details",
+      "note": "Schedule, divisions, and registration details not publicly available online"
+    }
+  ],
+  "league_schedules_thanksgiving_weekend": {
+    "n_zone_sports_houston": {
+      "organization": "N Zone Sports Houston Bay Area",
+      "november_29_status": "NO GAMES - Thanksgiving break",
+      "url": "https://nzonesports.com/houstonbayarea/"
+    },
+    "the_farm_league": {
+      "organization": "The Farm League",
+      "thanksgiving_schedule": "Off the first Saturday/Sunday and week of Thanksgiving, resume second weekend",
+      "november_29_30_status": "May have games - Black Friday Blitz event",
+      "url": "https://www.thefarmleague.com/"
+    },
+    "ymca_greater_houston": {
+      "organization": "YMCA of Greater Houston",
+      "status": "Regular league schedule - check with individual branches",
+      "url": "https://ymcahouston.org/programs/sports/youth-flag-football"
+    }
+  },
+  "no_events_found": [
+    {
+      "search_type": "USA Flag Football tournaments",
+      "location": "San Antonio, TX",
+      "dates_searched": "November 29-30, 2025",
+      "result": "No tournaments found for these specific dates",
+      "note": "San Antonio Flag Fest was in May 2025",
+      "url": "https://usaflag.org/tournaments/"
+    },
+    {
+      "search_type": "Dallas/Fort Worth area tournaments",
+      "dates_searched": "November 29-30, 2025",
+      "result": "No tournaments found - most leagues on Thanksgiving break"
+    },
+    {
+      "search_type": "Austin area tournaments",
+      "dates_searched": "November 29-30, 2025",
+      "result": "No specific tournaments found for these dates"
+    }
+  ],
+  "recommendations": {
+    "for_participants": [
+      "Contact The Farm League directly about Black Friday Blitz details",
+      "Consider the Houston Texans Regional on December 6 as an alternative",
+      "Check with local leagues about potential makeup games or special events",
+      "Many leagues are on Thanksgiving break this weekend"
+    ],
+    "contact_information": [
+      {
+        "organization": "NFL FLAG (Official)",
+        "email": "info@nflflag.com",
+        "phone": "1-844-940-1005",
+        "website": "https://nflflag.com/events"
+      },
+      {
+        "organization": "The Farm League",
+        "address": "19735 Stuebner Airline Rd, Spring, TX 77379",
+        "website": "https://www.thefarmleague.com/",
+        "note": "Best source for Black Friday Blitz information"
+      },
+      {
+        "organization": "USA Flag Football",
+        "website": "https://usaflag.org/tournaments/",
+        "note": "Check for any late-added tournaments"
+      }
+    ]
+  },
+  "important_notes": [
+    "Thanksgiving weekend (Nov 28-30, 2025) is typically a break period for most youth sports leagues",
+    "The Dallas Cowboys Regional (Nov 9) has already passed",
+    "The Houston Texans Regional (Dec 6) is the next major NFL FLAG event in Texas",
+    "Limited public information available for local/independent tournaments",
+    "Always verify directly with tournament organizers as schedules can change",
+    "Registration deadlines may have passed for some events",
+    "Some events may be announced last-minute or only promoted through local channels"
+  ],
+  "alternative_options": {
+    "nearby_dates": [
+      {
+        "event": "Houston Texans NFL FLAG Regional",
+        "date": "December 6, 2025",
+        "location": "Spring, TX",
+        "status": "Registration Open"
+      }
+    ],
+    "practice_opportunities": [
+      "The Farm League - Regular practices may be available",
+      "YMCA facilities - Check local branch schedules",
+      "Local parks and recreation departments"
+    ]
+  }
+}
