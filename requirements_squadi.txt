@@ -1,0 +1,15 @@
+# Dépendances pour le scraper Squadi
+
+# Scraping web de base
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+
+# Contourner les protections anti-bot
+cloudscraper>=1.2.71
+
+# Scraping JavaScript avec navigateur headless
+selenium>=4.15.0
+webdriver-manager>=4.0.1
+
+# Parsing et manipulation de données
+lxml>=4.9.3
