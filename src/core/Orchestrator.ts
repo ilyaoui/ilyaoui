@@ -14,6 +14,7 @@ import { ScraperAgent } from '../agents/ScraperAgent';
 import { ValidatorAgent } from '../agents/ValidatorAgent';
 import { DeduperAgent } from '../agents/DeduperAgent';
 import { ReporterAgent } from '../agents/ReporterAgent';
+import { detectPlugin } from '../plugins';
 import path from 'path';
 import fs from 'fs';
 
@@ -87,6 +88,12 @@ export class Orchestrator {
 
       const apiDiscovery = apiResult.data;
 
+      // Check for site-specific plugin
+      const plugin = detectPlugin(url);
+      if (plugin) {
+        this.logger.info(`Using plugin: ${plugin.name}`);
+      }
+
       // 3. Extraction based on strategy
       let rawMatches: any[] = [];
 
@@ -97,42 +104,75 @@ export class Orchestrator {
       } else {
         this.logger.info('Using scraping extraction...');
 
-        // 3a. UI Navigation (discover all calendar views)
-        if (plan.strategy === 'scrape' || plan.strategy === 'hybrid') {
-          const navResult = await this.uiNavigatorAgent.run(
-            { page: this.page! },
-            agentContext
-          );
+        // Use plugin if available
+        if (plugin && plugin.navigateFilters) {
+          this.logger.info(`Using plugin navigation: ${plugin.name}`);
 
-          if (navResult.success) {
-            const graph = navResult.data!;
-            this.logger.info(`Discovered ${graph.views.length} calendar views`);
+          try {
+            const views = await plugin.navigateFilters(this.page!);
+            this.logger.info(`Plugin discovered ${views.length} calendar views`);
 
-            // 3b. Scrape each view
-            for (const view of graph.views) {
-              // Navigate to view
-              await this.page!.goto(view.url, { waitUntil: 'networkidle' });
-
-              // Scrape matches
-              const scrapeResult = await this.scraperAgent.run(
-                { page: this.page! },
-                agentContext
-              );
-
-              if (scrapeResult.success) {
-                rawMatches.push(...scrapeResult.data!);
+            // Scrape each view
+            for (const view of views) {
+              // Use plugin extraction if available
+              if (plugin.extractMatches) {
+                const pluginMatches = await plugin.extractMatches(this.page!);
+                rawMatches.push(...pluginMatches);
+              } else {
+                // Fallback to default scraper
+                const scrapeResult = await this.scraperAgent.run(
+                  { page: this.page! },
+                  agentContext
+                );
+                if (scrapeResult.success) {
+                  rawMatches.push(...scrapeResult.data!);
+                }
               }
             }
+          } catch (error) {
+            this.logger.warn(`Plugin navigation failed: ${error}. Falling back to default.`);
           }
-        } else {
-          // Single page scrape
-          const scrapeResult = await this.scraperAgent.run(
-            { page: this.page! },
-            agentContext
-          );
+        }
 
-          if (scrapeResult.success) {
-            rawMatches = scrapeResult.data!;
+        // Fallback to default navigation if no plugin or plugin failed
+        if (rawMatches.length === 0) {
+          // 3a. UI Navigation (discover all calendar views)
+          if (plan.strategy === 'scrape' || plan.strategy === 'hybrid') {
+            const navResult = await this.uiNavigatorAgent.run(
+              { page: this.page! },
+              agentContext
+            );
+
+            if (navResult.success) {
+              const graph = navResult.data!;
+              this.logger.info(`Discovered ${graph.views.length} calendar views`);
+
+              // 3b. Scrape each view
+              for (const view of graph.views) {
+                // Navigate to view
+                await this.page!.goto(view.url, { waitUntil: 'networkidle' });
+
+                // Scrape matches
+                const scrapeResult = await this.scraperAgent.run(
+                  { page: this.page! },
+                  agentContext
+                );
+
+                if (scrapeResult.success) {
+                  rawMatches.push(...scrapeResult.data!);
+                }
+              }
+            }
+          } else {
+            // Single page scrape
+            const scrapeResult = await this.scraperAgent.run(
+              { page: this.page! },
+              agentContext
+            );
+
+            if (scrapeResult.success) {
+              rawMatches = scrapeResult.data!;
+            }
           }
         }
       }
