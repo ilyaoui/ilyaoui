@@ -1,5 +1,15 @@
 # NFL Flag Scraper - Git Ignore File
 
+# Node.js / TypeScript
+node_modules/
+dist/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
 # Python
 __pycache__/
 *.py[cod]
@@ -8,7 +18,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -37,20 +46,37 @@ credentials/
 tokens/
 
 # Output Files
+output/
+logs/
+*.log
+*.har
+*.png
+*.jpg
+*.mp4
+*.webm
+trace.zip
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Scraper output
 *.csv
 *.json
 !config.example.json
+!scraper.config.example.json
 !requirements.txt
+!package.json
+!tsconfig.json
+!jest.config.js
+!.eslintrc.json
+!.prettierrc.json
 nfl_flag_*.csv
 nfl_flag_*.json
 tournament_*.csv
 tournament_*.json
 bluesombrero_*.csv
 bluesombrero_*.json
-
-# Logs
-*.log
-logs/
 
 # IDE
 .vscode/

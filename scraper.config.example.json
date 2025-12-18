@@ -1,0 +1,62 @@
+{
+  "scraping": {
+    "headless": true,
+    "timeout": 30000,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  "limits": {
+    "maxInteractions": 50,
+    "maxPages": 20,
+    "maxDepth": 5,
+    "requestDelay": 1000
+  },
+  "selectors": {
+    "calendar": [
+      "table[class*='schedule']",
+      "table[class*='calendar']",
+      "div[class*='calendar']",
+      "[data-testid='calendar']"
+    ],
+    "match": [
+      "tr[class*='match']",
+      "tr[class*='game']",
+      "div[class*='match-card']",
+      "div[class*='game-card']",
+      "article[class*='game']"
+    ],
+    "home": [
+      "[class*='home']",
+      "[class*='team-1']",
+      ".home-team"
+    ],
+    "away": [
+      "[class*='away']",
+      "[class*='team-2']",
+      ".away-team"
+    ],
+    "date": [
+      "[class*='date']",
+      "[class*='time']",
+      "time[datetime]"
+    ],
+    "location": [
+      "[class*='location']",
+      "[class*='venue']"
+    ]
+  },
+  "output": {
+    "directory": "./output",
+    "formats": ["json", "csv"],
+    "saveHAR": true,
+    "saveScreenshots": true,
+    "saveTraces": false
+  },
+  "plugins": {
+    "enabled": [],
+    "directory": "./plugins"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "sports-calendar-scraper",
+  "version": "1.0.0",
+  "description": "Robust, API-first sports calendar scraper with multi-agent architecture",
+  "main": "dist/index.js",
+  "bin": {
+    "scrape-calendar": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write 'src/**/*.ts'"
+  },
+  "keywords": [
+    "scraper",
+    "calendar",
+    "sports",
+    "playwright",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@playwright/test": "^1.41.0",
+    "commander": "^11.1.0",
+    "winston": "^3.11.0",
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "zod": "^3.22.4",
+    "csv-writer": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/jest": "^29.5.11",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "prettier": "^3.1.1"
+  }
+}
