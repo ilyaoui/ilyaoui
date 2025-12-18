@@ -41,33 +41,67 @@ export class APIScoutAgent extends Agent<APIScoutInput, APIDiscovery> {
     // Navigate to page
     await page.goto(url, { waitUntil: 'networkidle' });
 
-    // Wait for potential XHR calls (increased timeout)
-    await page.waitForTimeout(5000);
+    // Wait for initial page load
+    await page.waitForTimeout(3000);
 
-    // Scroll to trigger lazy loading
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(2000);
+    // Record current network calls count (baseline)
+    const baselineCallsCount = this.networkCalls.length;
+    this.logger.info(`Baseline: ${baselineCallsCount} network calls captured`);
 
-    // Try clicking on common navigation elements to trigger API calls
+    // Try clicking on schedule/navigation elements to trigger API calls
     const navSelectors = [
       'a:has-text("Schedule")',
       'button:has-text("Schedule")',
+      'a:has-text("Schedules")',
+      'button:has-text("Schedules")',
+      '[href*="schedule"]',
       '[class*="tab"]',
-      '[class*="nav"]',
+      '[class*="nav-link"]',
     ];
 
     for (const selector of navSelectors) {
       try {
-        const element = await page.$(selector);
-        if (element && await element.isVisible()) {
-          this.logger.info(`Clicking ${selector} to trigger API calls...`);
-          await element.click();
-          await page.waitForTimeout(2000);
+        const elements = await page.$$(selector);
+
+        for (let i = 0; i < Math.min(elements.length, 3); i++) {
+          const element = elements[i];
+          const isVisible = await element.isVisible();
+
+          if (isVisible) {
+            const text = await element.textContent();
+            this.logger.info(`Clicking on: "${text?.trim()}" (${selector})`);
+
+            // Record calls before click
+            const beforeClick = this.networkCalls.length;
+
+            // Click and wait for network activity
+            await element.click();
+            await page.waitForTimeout(3000);
+
+            // Check if new API calls were triggered
+            const afterClick = this.networkCalls.length;
+            const newCalls = afterClick - beforeClick;
+
+            if (newCalls > 0) {
+              this.logger.info(`✅ Click triggered ${newCalls} new network calls`);
+
+              // Log the new calls
+              const recentCalls = this.networkCalls.slice(beforeClick);
+              for (const call of recentCalls) {
+                if (this.isAPICall(call)) {
+                  this.logger.info(`   📡 API call: ${call.method} ${call.url}`);
+                }
+              }
+            }
+          }
         }
-      } catch {
-        // Continue if click fails
+      } catch (error) {
+        this.logger.debug(`Could not interact with ${selector}: ${error}`);
       }
     }
+
+    // Final wait to capture any delayed responses
+    await page.waitForTimeout(2000);
 
     // Analyze collected network calls
     const endpoints = this.analyzeNetworkCalls();
@@ -152,10 +186,30 @@ export class APIScoutAgent extends Agent<APIScoutInput, APIDiscovery> {
 
   private analyzeNetworkCalls(): APIEndpoint[] {
     const endpoints: APIEndpoint[] = [];
+    const uniqueUrls = new Set<string>();
 
     for (const call of this.networkCalls) {
-      // Filter out non-API calls
-      if (this.isAPICall(call)) {
+      // Filter out non-API calls and duplicates
+      if (this.isAPICall(call) && !uniqueUrls.has(call.url)) {
+        uniqueUrls.add(call.url);
+
+        // Calculate confidence based on response
+        let confidence = 0.5;
+        if (call.response) {
+          const responseStr = JSON.stringify(call.response).toLowerCase();
+
+          // Higher confidence if response contains schedule-related data
+          if (responseStr.includes('game') || responseStr.includes('match')) {
+            confidence += 0.3;
+          }
+          if (responseStr.includes('team')) {
+            confidence += 0.1;
+          }
+          if (responseStr.includes('schedule') || responseStr.includes('event')) {
+            confidence += 0.1;
+          }
+        }
+
         endpoints.push({
           url: call.url,
           method: call.method as any,
@@ -164,8 +218,20 @@ export class APIScoutAgent extends Agent<APIScoutInput, APIDiscovery> {
           sampleResponse: call.response,
           detected_by: 'network',
         });
+
+        // Log high-confidence endpoints
+        if (confidence > 0.7) {
+          this.logger.info(`🎯 High-confidence API found: ${call.url}`);
+        }
       }
     }
+
+    // Sort by confidence (endpoints with responses first)
+    endpoints.sort((a, b) => {
+      const aHasResponse = a.sampleResponse ? 1 : 0;
+      const bHasResponse = b.sampleResponse ? 1 : 0;
+      return bHasResponse - aHasResponse;
+    });
 
     return endpoints;
   }
