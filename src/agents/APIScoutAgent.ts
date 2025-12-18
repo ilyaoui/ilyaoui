@@ -41,8 +41,33 @@ export class APIScoutAgent extends Agent<APIScoutInput, APIDiscovery> {
     // Navigate to page
     await page.goto(url, { waitUntil: 'networkidle' });
 
-    // Wait for potential XHR calls
+    // Wait for potential XHR calls (increased timeout)
+    await page.waitForTimeout(5000);
+
+    // Scroll to trigger lazy loading
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(2000);
+
+    // Try clicking on common navigation elements to trigger API calls
+    const navSelectors = [
+      'a:has-text("Schedule")',
+      'button:has-text("Schedule")',
+      '[class*="tab"]',
+      '[class*="nav"]',
+    ];
+
+    for (const selector of navSelectors) {
+      try {
+        const element = await page.$(selector);
+        if (element && await element.isVisible()) {
+          this.logger.info(`Clicking ${selector} to trigger API calls...`);
+          await element.click();
+          await page.waitForTimeout(2000);
+        }
+      } catch {
+        // Continue if click fails
+      }
+    }
 
     // Analyze collected network calls
     const endpoints = this.analyzeNetworkCalls();
@@ -157,9 +182,18 @@ export class APIScoutAgent extends Agent<APIScoutInput, APIDiscovery> {
       '/graphql',
       '/rest/',
       '.json',
+      '/schedules',
+      '/games',
+      '/events',
+      '/matches',
+      '/calendar',
     ];
 
-    return apiPatterns.some((pattern) => url.includes(pattern));
+    // Also check content-type
+    const contentType = call.headers['content-type'] || '';
+    const isJSON = contentType.includes('application/json');
+
+    return apiPatterns.some((pattern) => url.includes(pattern)) || isJSON;
   }
 
   private async extractJSONLD(page: Page): Promise<APIEndpoint[]> {
