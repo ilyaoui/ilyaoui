@@ -150,7 +150,7 @@ export class Orchestrator {
               // 3b. Scrape each view
               for (const view of graph.views) {
                 // Navigate to view
-                await this.page!.goto(view.url, { waitUntil: 'networkidle' });
+                await this.page!.goto(view.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
 
                 // Scrape matches
                 const scrapeResult = await this.scraperAgent.run(
