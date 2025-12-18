@@ -38,8 +38,8 @@ export class APIScoutAgent extends Agent<APIScoutInput, APIDiscovery> {
     // Setup network interception
     await this.setupNetworkInterception(page);
 
-    // Navigate to page
-    await page.goto(url, { waitUntil: 'networkidle' });
+    // Navigate to page (use domcontentloaded instead of networkidle to avoid timeout on busy sites)
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
 
     // Wait for initial page load
     await page.waitForTimeout(3000);

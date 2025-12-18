@@ -59,8 +59,8 @@ export const ExposureEventsPlugin: ScraperPlugin = {
 
     console.log('[ExposureEvents] Looking for schedule buttons...');
 
-    // Wait for page to load
-    await page.waitForLoadState('networkidle');
+    // Wait for page to load (use domcontentloaded to avoid timeout)
+    await page.waitForLoadState('domcontentloaded');
 
     // Look for common schedule/bracket buttons on ExposureEvents
     const scheduleSelectors = [
@@ -91,8 +91,8 @@ export const ExposureEventsPlugin: ScraperPlugin = {
 
             // Click and wait for navigation
             await button.click();
-            await page.waitForLoadState('networkidle');
-            await page.waitForTimeout(2000);
+            await page.waitForLoadState('domcontentloaded');
+            await page.waitForTimeout(3000);
 
             // Capture this view
             views.push({
@@ -121,8 +121,8 @@ export const ExposureEventsPlugin: ScraperPlugin = {
     console.log('[ExposureEvents] Extracting matches...');
 
     // Wait for content to load
-    await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(2000);
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(3000);
 
     // ExposureEvents specific selectors
     const gameSelectors = [
